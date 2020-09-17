@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import br.com.exception.DaoException;
+
 public class SqlConnection {
 	private static Connection conexao = null;
 	
@@ -10,7 +12,7 @@ public class SqlConnection {
 		
 	}
 
-	public static Connection getInstance() {
+	public static Connection getInstance() throws DaoException {
 		
 			try {
 				if(conexao == null || conexao.isClosed()) {
@@ -20,8 +22,8 @@ public class SqlConnection {
 						SqlUtil.SENHA);
 				}	
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new DaoException("Erro ao conectar o banco de dados");
 			}
 			return conexao;
 		
